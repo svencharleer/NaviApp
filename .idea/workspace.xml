@@ -2,20 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4caffe15-fa66-4e10-a600-a5ca5c889f1a" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/index.html" afterPath="$PROJECT_DIR$/views/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/index.js" afterPath="$PROJECT_DIR$/routes/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/stepupData.js" afterPath="$PROJECT_DIR$/routes/stepupData.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="NaviApp.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="4caffe15-fa66-4e10-a600-a5ca5c889f1a" time="1373379779072" ignored="false" />
     <file path="/app.js" changelist="4caffe15-fa66-4e10-a600-a5ca5c889f1a" time="1373379440814" ignored="false" />
     <file path="/guid.js" changelist="4caffe15-fa66-4e10-a600-a5ca5c889f1a" time="1373380122800" ignored="false" />
-    <file path="/index.js" changelist="4caffe15-fa66-4e10-a600-a5ca5c889f1a" time="1373638045982" ignored="false" />
+    <file path="/index.js" changelist="4caffe15-fa66-4e10-a600-a5ca5c889f1a" time="1373638415578" ignored="false" />
     <file path="/stepupData.js" changelist="4caffe15-fa66-4e10-a600-a5ca5c889f1a" time="1373637646300" ignored="false" />
     <file path="/fragment.js" changelist="4caffe15-fa66-4e10-a600-a5ca5c889f1a" time="1373635245903" ignored="false" />
     <file path="/accountTypes.js" changelist="4caffe15-fa66-4e10-a600-a5ca5c889f1a" time="1373631989193" ignored="false" />
-    <file path="/index.html" changelist="4caffe15-fa66-4e10-a600-a5ca5c889f1a" time="1373635367271" ignored="false" />
+    <file path="/index.html" changelist="4caffe15-fa66-4e10-a600-a5ca5c889f1a" time="1373638559076" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,10 +43,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="32" selection-start="447" selection-end="447" vertical-scroll-proportion="0.4560811">
+            <state line="79" column="54" selection-start="2453" selection-end="2453" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -89,10 +88,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="91" selection-start="1739" selection-end="1739" vertical-scroll-proportion="-9.375">
+            <state line="65" column="55" selection-start="1825" selection-end="1825" vertical-scroll-proportion="0.4753521">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/stylesheets/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="40" column="8" selection-start="489" selection-end="490" vertical-scroll-proportion="-15.2">
               <folding />
             </state>
           </provider>
@@ -127,10 +135,10 @@
       <list>
         <option value="$PROJECT_DIR$/routes/guid.js" />
         <option value="$PROJECT_DIR$/app.js" />
-        <option value="$PROJECT_DIR$/views/index.html" />
         <option value="$PROJECT_DIR$/routes/accountTypes.js" />
         <option value="$PROJECT_DIR$/routes/stepupData.js" />
         <option value="$PROJECT_DIR$/routes/index.js" />
+        <option value="$PROJECT_DIR$/views/index.html" />
       </list>
     </option>
   </component>
@@ -208,6 +216,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="routes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NaviApp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NaviApp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stylesheets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NaviApp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NaviApp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -437,13 +477,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="91" selection-start="1739" selection-end="1739" vertical-scroll-proportion="-9.375">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/accountTypes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="24" selection-start="308" selection-end="308" vertical-scroll-proportion="0.0">
@@ -467,7 +500,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="32" selection-start="447" selection-end="447" vertical-scroll-proportion="0.4560811">
+        <state line="79" column="54" selection-start="2453" selection-end="2453" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="8" selection-start="489" selection-end="490" vertical-scroll-proportion="-15.2">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="55" selection-start="1825" selection-end="1825" vertical-scroll-proportion="0.4753521">
           <folding />
         </state>
       </provider>

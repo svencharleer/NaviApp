@@ -64,12 +64,20 @@ var renderIndexAfterDataLoad = function()
             {
                 b.hasBadge = true;
             }
-
+            //serieous refactor needed after this but let's just get it working
+            //get nr of badges that have been awarded
+            var totalStudentsThatHaveBadge = 0;
+            for(student in badgeData.badgesById)
+            {
+                if(badgeData.badgesById[student][badgeId] != null)
+                   totalStudentsThatHaveBadge++;
+            }
 
             b.name = def.badge.name;
             b.description =def.badge.description;
             b.image = def.badge.image;
             b.guid = GUID.generateGUID();
+            b.classTotal = totalStudentsThatHaveBadge;
             displayBadges.push(b);
 
         }

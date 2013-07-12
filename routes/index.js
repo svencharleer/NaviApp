@@ -9,14 +9,28 @@ var accountTypes = require('./accountTypes.js');
 
 var GUID = require('./guid.js');
 
+var totalStudents = 0;
+var totalStudentsLoaded = 0;
 var badgeData = {
     badgeDefinitions: null,
-    badgesById: null                                           ,
+    badgesById: null,
+    students: null,
     badgeDefinitionsUpdated: function() {
-        stepupData.getBadgesOfPerson(sessionUserId, badgeData);
+        totalStudentsLoaded = 0;
+        stepupData.getAllStudents(badgeData);
+
+    },
+    studentsLoaded: function() {
+        totalStudents = this.students.length;
+        for(var i = 0; i < totalStudents;i++)
+        {
+            stepupData.getBadgesOfPerson(this.students[i].username, badgeData);
+        }
     },
     badgeForUserUpdated: function() {
-        eventEmitter.emit('badgeDataLoaded');
+        totalStudentsLoaded++;
+        if(totalStudents == totalStudentsLoaded)
+            eventEmitter.emit('badgeDataLoaded');
     }
 };
 var res, req;
@@ -33,7 +47,7 @@ var displayBadge = function()
 
 var renderIndexAfterDataLoad = function()
 {
-    if(badgeData.badgeDefinitions != null && badgeData.badgesById[sessionUserId] != null)
+    //if(badgeData.badgeDefinitions != null && badgeData.badgesById[sessionUserId] != null)
     {
         var displayBadges = [];
         //can only by now check the badge data, as all is loaded now...
@@ -42,7 +56,7 @@ var renderIndexAfterDataLoad = function()
             var def = badgeData.badgeDefinitions[definitionKey];
             var badgeId = def.badge.image;
             var b = new displayBadge();
-            if(badgeData.badgesById[sessionUserId][badgeId] == null)
+            if(badgeData.badgesById[sessionUserId] == null || badgeData.badgesById[sessionUserId][badgeId] == null)
             {
                 b.hasBadge = false;
             }

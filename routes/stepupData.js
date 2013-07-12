@@ -26,6 +26,22 @@ exports.getAllBadges = function(badgeData)
         });
 
 }
+
+exports.getAllStudents = function(badgeData)
+{
+    var json = {pag:"0"};
+    restler.postJson("http://ariadne.cs.kuleuven.be/wespot-dev-ws/rest/getCourses/arLearn-fake/verb/awarded", json)
+        .once('complete', function(data, response) {
+            if (response.statusCode != 200) {
+            }
+            else {
+                 badgeData.students = JSON.parse(response.rawEncoded);
+                badgeData.studentsLoaded();
+
+            }
+        });
+}
+
 exports.getBadgesOfPerson = function(id,badgeData)
 {
     var options = {

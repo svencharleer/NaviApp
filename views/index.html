@@ -60,20 +60,20 @@
 <h2>Global Badges</h2>
 
 <% badges.forEach(function(badge){ %>
-			<div class="badgeicon" id="img<%= badge.guid %>">
+			<div class="badgeicon <% if(badge.hasBadge == false){ %> notYetAchievedBadge <% } %> " id="img<%= badge.guid %>">
 			
 			
 				<!--<div class="badgeCount"><img src="person.png"/><span style="">3</span></div>-->
 				<div>
 				<a href="javascript:showBadgeData('<%= badge.guid %>')">
-					<img class="iconitself" src="<%= badge.originalrequest.badge.image %>" alt="<%= badge.originalrequest.badge.name %>"/>
+					<img class="iconitself" src="<%= badge.image %>" alt="<%= badge.name %>"/>
 				</a>
 				</div>
 				
 			</div>
 					
 			<div id="<%= badge.guid %>" style="display:none;">
-				<h2><%= badge.originalrequest.badge.name %></h2><p><%= badge.originalrequest.badge.description %></p> 
+				<h2><%= badge.name %></h2><p><%= badge.description %></p>
 			</div>
 
   <% }) %>

@@ -1,5 +1,4 @@
 
-var GUID = require('./guid.js');
 var restler = require('restler');
 
 exports.getAllBadges = function(badgeData)
@@ -13,9 +12,15 @@ exports.getAllBadges = function(badgeData)
             }
             else
             {
+                badgeData.badgeDefinitions = {};
               // console.log(result);
-               badgeData.badgeDefinitions = result;
-               badgeData.update();
+                for(var i=0; i < result.length; i++)
+                {
+
+                    badgeData.badgeDefinitions[result[i].badge.image] = result[i];
+                }
+
+               badgeData.badgeDefinitionsUpdated();
             }
 
         });
@@ -38,17 +43,21 @@ exports.getBadgesOfPerson = function(id,badgeData)
             else {
                 //console.log(response);
                 var badges = JSON.parse(response.rawEncoded);
-
+               console.log(response)  ;
                 for (var i = 0; i < badges.length; i++) {
 
                     badges[i].context = JSON.parse(badges[i].context);
                     badges[i].originalrequest = JSON.parse(badges[i].originalrequest);
                     //console.log(badges[i].originalrequest.badge);
-                    badges[i].guid = GUID.generateGUID();
-                }
 
-                badgeData.badgesById = badges;
-                badgeData.update();
+                }
+                if(badgeData.badgesById == null) badgeData.badgesById = {};
+                if(badgeData.badgesById[id] == null) badgeData.badgesById[id] = {};
+                for(var i=0;i<badges.length;i++)
+                {
+                    badgeData.badgesById[id][badges[i].originalrequest.badge.image] =  badges[i];
+                }
+                badgeData.badgeForUserUpdated();
             }
 
         });

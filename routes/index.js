@@ -75,7 +75,7 @@ var renderIndexAfterDataLoad = function()
 
             b.name = def.badge.name;
             b.description =def.badge.description;
-            b.image = def.badge.image;
+            b.image = "." +def.badge.image;
             b.guid = GUID.generateGUID();
             b.classTotal = totalStudentsThatHaveBadge;
             displayBadges.push(b);

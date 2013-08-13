@@ -59,7 +59,7 @@ exports.getBadgesOfPerson = function(id,badgeData)
             else {
                 //console.log(response);
                 var badges = JSON.parse(response.rawEncoded);
-               console.log(response)  ;
+               //console.log(response)  ;
                 for (var i = 0; i < badges.length; i++) {
 
                     badges[i].context = JSON.parse(badges[i].context);

@@ -6,33 +6,11 @@ var events = require('events');
 var eventEmitter = new events.EventEmitter();
 var stepupData = require('./stepupData.js');
 var accountTypes = require('./accountTypes.js');
-
+var badgeDataSystem = require('./badgeData.js');
 var GUID = require('./guid.js');
 
-var totalStudents = 0;
-var totalStudentsLoaded = 0;
-var badgeData = {
-    badgeDefinitions: null,
-    badgesById: null,
-    students: null,
-    badgeDefinitionsUpdated: function() {
-        totalStudentsLoaded = 0;
-        stepupData.getAllStudents(badgeData);
 
-    },
-    studentsLoaded: function() {
-        totalStudents = this.students.length;
-        for(var i = 0; i < totalStudents;i++)
-        {
-            stepupData.getBadgesOfPerson(this.students[i].username, badgeData);
-        }
-    },
-    badgeForUserUpdated: function() {
-        totalStudentsLoaded++;
-        if(totalStudents == totalStudentsLoaded)
-            eventEmitter.emit('badgeDataLoaded');
-    }
-};
+var badgeData = null;
 var res, req;
 var sessionUserId;
 
@@ -95,12 +73,13 @@ exports.index = function(_req, _res){
     sessionUserId = accountType + "_" + _req.query.user;
     //check if account types are filled in
     //todo
+    badgeData = badgeDataSystem.badgeData(eventEmitter,'badgeDataForIndexLoaded');
     stepupData.getAllBadges(badgeData);
 
 
 
 
-    eventEmitter.on('badgeDataLoaded', renderIndexAfterDataLoad);
+    eventEmitter.on('badgeDataForIndexLoaded', renderIndexAfterDataLoad);
 
 };
 

@@ -6,6 +6,7 @@
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
+    , graph = require('./routes/graph')
   , http = require('http')
   , path = require('path');
 
@@ -31,6 +32,7 @@ if ('development' == app.get('env')) {
 }
 
 app.get(path.join(context,'/'), routes.index);
+app.get(path.join(context,'/graph'), graph.graph);
 app.get(path.join(context,'/users'), user.list);
 
 http.createServer(app).listen(app.get('port'), function(){

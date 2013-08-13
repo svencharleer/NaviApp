@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>CHI13 Badge Overview</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="stylesheets/style.css" />
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script src="http://beta.openbadges.org/issuer.js"></script>
+	
+	<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-38498955-1']);
+		  _gaq.push(['_trackPageview']);
+		
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+	</script>
+	<script type="text/javascript">
+	function showBadgeData(value)
+		{
+			$('.badgeicon').removeClass('badgeiconSelected');
+			$('#img'+value).addClass('badgeiconSelected');
+			
+			$('#badgedetail').html($('#'+value).html());
+
+
+			
+		}
+	function showPeriod(value)
+	{
+		$('div[id^="period"]').attr("style","display:none;")
+		$('#period'+value).attr("style","");
+	}
+	
+	function showIteration(value)
+	{
+		$('div[id^="iteration"]').attr("style","display:none;")
+		
+		$('#iteration'+value).attr("style","");
+	}
+	</script>
+</head>
+<body>
+
+<div id="header">
+	<div id="globalheader">
+		<h2>Navi Badgeboard</h2>
+	</div>
+	<div id="filter">
+	</div>
+	<div id="badgedetail">Select a badge to view its details</div>
+</div>
+<!-- /header -->
+
+<div id="badgeoverview" >
+	
+	<div id="global" class="badgesection">	
+<h2>Global Badges</h2>
+
+<% Object.keys(graphData).forEach(function(data){
+        Object.keys(graphData[data]).forEach(function(data2){
+
+        %>
+		<%=	graphData[data][data2] %> <%= data2 %>     <%= data %>
+  <% }) }) %>
+</div>
+
+
+</body>
+</html>

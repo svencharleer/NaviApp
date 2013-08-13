@@ -64,7 +64,9 @@ var renderGraphAfterDataLoad = function()
             for(var bkey in graphData)
             {
                 if(datadata[bkey] == null) datadata[bkey] = {};
-                datadata[bkey][ago] = graphData[bkey].dateAndTotal[ago] == null ? 0 :  graphData[bkey].dateAndTotal[ago];
+                datadata[bkey][ago]  = {};
+                datadata[bkey][ago].count = graphData[bkey].dateAndTotal[ago] == null ? 0 :  graphData[bkey].dateAndTotal[ago];
+                datadata[bkey][ago].date = ago;
             }
             ago.setDate(ago.getDate() +1);
         }

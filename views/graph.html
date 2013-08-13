@@ -5,7 +5,7 @@
 	<link rel="stylesheet" href="stylesheets/style.css" />
 	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 	<script src="http://beta.openbadges.org/issuer.js"></script>
-	
+    <script type="text/javascript" src="../javascripts/d3.v3/d3.v3.js"></script>
 	<script type="text/javascript">
 		  var _gaq = _gaq || [];
 		  _gaq.push(['_setAccount', 'UA-38498955-1']);
@@ -17,30 +17,259 @@
 		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		  })();
 	</script>
-	<script type="text/javascript">
-	function showBadgeData(value)
-		{
-			$('.badgeicon').removeClass('badgeiconSelected');
-			$('#img'+value).addClass('badgeiconSelected');
-			
-			$('#badgedetail').html($('#'+value).html());
+    <script type="text/javascript">
+        var svg;
+        var xscale;
+        var yscale;
+
+        function initSVG()
+        {
+            var height = 400;
+            var width = 800;
+            var padding = 20;
+            var margin = 20;
+            svg = d3.select("#graphs")
+                    .append("svg")
+                    .attr("class", "svgChart")
+                    .attr("viewBox", "0 0 " + width + " " + height)
+                    .attr("preserveAspectRatio", "xMinYMin meet");
+            var numberOfStudents = 30;
+            var data = [
+
+                    <% Object.keys(graphData).forEach(function(data){  %>
+                        [
+                        <%Object.keys(graphData[data]).forEach(function(data2){ %>
+                {date: '<%= graphData[data][data2].date.getTime() %>' ,count: <%=	graphData[data][data2].count %>, divID: "000"},
+                        <% }) %> ], <% }) %>
+        ];
+            data = data[0];
+
+            xscale = d3.time.scale()
+                    .domain([
+                        d3.min(data, function(d) {return d.date;}),
+                        d3.max(data, function(d) {return d.date;})
+                    ])
+                    .range([padding+margin,width - 2*padding - margin]);
+            yscale = d3.scale.linear()
+                    .domain([0, numberOfStudents ])
+        .range([height - padding -2*margin,padding]);
 
 
-			
-		}
-	function showPeriod(value)
-	{
-		$('div[id^="period"]').attr("style","display:none;")
-		$('#period'+value).attr("style","");
-	}
-	
-	function showIteration(value)
-	{
-		$('div[id^="iteration"]').attr("style","display:none;")
-		
-		$('#iteration'+value).attr("style","");
-	}
-	</script>
+            drawAxes(svg, xscale, yscale, data, height, width,margin,padding);
+        }
+
+        /* D3 GRAPH DRAWING */
+        function drawCurve(svg, data, xscale, yscale, awarded, timestamp, red, green, blue)
+        {
+            var personalBadge ={date: "",count: 0};
+
+            if(awarded == true)
+            {
+                personalBadge.date = timestamp;
+            }
+
+            for(var i = 0; i < data.length;i++)
+            {
+                if(personalBadge.date == data[i].date)
+                {
+                    personalBadge.count = data[i].count;
+                }
+                //data[i].date = new Date(data[i].date);
+
+            }
+            if(awarded == true)
+            {
+                personalBadge.date = new Date(personalBadge.date);
+            }
+
+            var lineFunction = d3.svg.line()
+                    .x(function(d) { return xscale(d.date); })
+                    .y(function(d) { return yscale(d.count); })
+                    .interpolate("linear");
+
+            var rgb = "rgb("+red+","+green+","+blue+")";
+
+            var badgeDiv = d3.select("body")
+                    .append("div")
+                    .html($("#"+data[0].divID).html())
+                    .attr("class","tooltip")
+                    .attr("style","display:none;");
+
+            var lineGraph = svg.append("path")
+                    .attr("d", lineFunction(data))
+                    .attr("class", "linecolor")
+                    .attr("stroke", rgb)
+                    .on("mouseover", function() {
+                        lineGraph.attr("style","stroke-width:4px");
+                        badgeDiv
+                                .transition()
+                                .duration(300)
+                                .style("opacity", .9);
+
+                        badgeDiv
+                                .attr("class","tooltip")
+                                .attr("style","left:" + (d3.event.pageX) + "px; top:" + (d3.event.pageY - 28) + "px");
+                        $("#"+data[0].divID).css("background-color","black");
+                        $("#"+data[0].divID).css("color","white");
+                    })
+                    .on("mouseout", function(d) {
+                        lineGraph.attr("style","");
+                        badgeDiv
+                                .transition()
+                                .duration(500)
+                                .style("opacity", 0);
+                        $("#"+data[0].divID).css("background-color","");
+                        $("#"+data[0].divID).css("color","");
+                    });
+
+            if(awarded == true)
+            {
+
+                var div = d3.select("body").append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);
+                var circle = svg
+                        .append("circle")
+                        .attr("class","yourbadge")
+                        .attr("cx", function(d) {return xscale(personalBadge.date);})
+                        .attr("cy", function(d) {return yscale(personalBadge.count);})
+                        .attr("r",5)
+                        .attr("stroke", rgb)
+                        .on("mouseover", function() {
+                            circle.attr("style","stroke-width:4px");
+                            badgeDiv
+                                    .transition()
+                                    .duration(300)
+                                    .style("opacity", .9);
+
+                            badgeDiv
+                                    .attr("class","tooltip")
+                                    .attr("style","left:" + (d3.event.pageX) + "px; top:" + (d3.event.pageY - 28) + "px");
+                            $("#"+data[0].divID).css("background-color","black");
+                            $("#"+data[0].divID).css("color","white");
+                        })
+                        .on("mouseout", function(d) {
+                            circle.attr("style","");
+                            badgeDiv
+                                    .transition()
+                                    .duration(500)
+                                    .style("opacity", 0);
+                            $("#"+data[0].divID).css("background-color","");
+                            $("#"+data[0].divID).css("color","");
+                        });
+            }
+        }
+
+        function enableDisableGraph(guid)
+        {
+            if($("#img"+guid).attr("data-enabled") == "true")
+            {
+                $("#img"+guid).attr("data-enabled","false");
+                $("#img"+guid).attr("style","border:solid 1px white;");
+
+                d3.select("svg").remove();
+                initSVG();
+                drawEnabledGraphs();
+            }
+            else
+            {
+                $("#img"+guid).attr("data-enabled","true");
+                d3.select("svg").remove();
+                initSVG();
+                drawEnabledGraphs();
+            }
+        }
+
+        function drawAxes(svg, xscale, yscale, data, height, width,margin,padding)
+        {
+            var xAxis = d3.svg.axis()
+                    .scale(xscale)
+                    .orient("bottom")
+                    .tickFormat(d3.time.format('%d/%m'))
+                    .ticks(data.length/2);
+            svg.append("text")      // text label for the x axis
+                    .attr("x", width/2 )
+                    .attr("y", height -margin )
+                    .style("text-anchor", "middle")
+                    .text("Date");
+
+            var yAxis = d3.svg.axis()
+                    .scale(yscale)
+                    .orient("left")
+                    .ticks(10);
+            svg.append("text")
+                //
+                    .attr("transform", "rotate(-90)")
+                    .attr("x",  -height/2)
+                    .attr("y", 0)
+
+                    .attr("dy", "1em")
+                    .style("text-anchor", "middle")
+                    .text("# students with badge");
+
+            svg.append("g")
+                    .call(xAxis)
+                    .attr("transform", "translate("+ 0 +"," + (height - padding - 2*margin) + ")")
+                    .attr("class", "axis")
+                    .selectAll("text")
+
+            ;
+            svg.append("g")
+                    .call(yAxis)
+                    .attr("transform", "translate(" + (padding + margin) + ",0)")
+                    .attr("class", "axis")
+            ;
+
+        }
+
+        function drawEnabledGraphs()
+        {
+            var i = 0;
+            //iterate over different stats
+
+                var awarded = false;
+
+                    var	timestamp = 0;
+
+            data = [
+
+                    <% Object.keys(graphData).forEach(function(data){  %>
+            [
+            <%Object.keys(graphData[data]).forEach(function(data2){ %>
+                {date: '<%= graphData[data][data2].date.getTime() %>' ,count: <%=	graphData[data][data2].count %>},
+                <% }) %> ], <% }) %>
+        ];
+            data = data[0];
+
+                var frequency = 1.7;
+                red   = Math.floor(Math.sin(frequency*i + 0) * 127 + 128);
+                green = Math.floor(Math.sin(frequency*i + 2) * 127 + 128);
+                blue  = Math.floor(Math.sin(frequency*i + 4) * 127 + 128);
+              drawCurve(svg, data, xscale, yscale, awarded, timestamp,red, green, blue);
+              setColorOfLegend('000', red, green, blue);
+
+        }
+
+        function  setColorOfLegend(guid, red, green, blue)
+        {
+            $("#img"+guid).attr("style", "border: solid 1px rgb("+red+","+green+","+blue+")");
+        }
+
+        function showHideLegend()
+        {
+            if($("#options").attr("style") == "display:none")
+            {
+                $("#filterLink").text("Hide Filter Options");
+                $("#options").attr("style","display:visible");
+            }
+            else
+            {
+                $("#filterLink").text("Show Filter Options");
+                $("#options").attr("style","display:none");
+            }
+
+        }
+    </script>
 </head>
 <body>
 
@@ -59,14 +288,19 @@
 	<div id="global" class="badgesection">	
 <h2>Global Badges</h2>
 
-<% Object.keys(graphData).forEach(function(data){
-        Object.keys(graphData[data]).forEach(function(data2){
+        <div id="graphs">
+        </div>
 
-        %>
-		<%=	graphData[data][data2] %> <%= data2 %>     <%= data %>
-  <% }) }) %>
-</div>
 
+    </div>
+
+
+<script type="text/javascript">
+    initSVG();
+
+    drawEnabledGraphs();
+
+</script>
 
 </body>
 </html>

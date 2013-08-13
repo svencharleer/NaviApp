@@ -13,6 +13,8 @@ var badgeDataForGraph = null;
 var res, req;
 var sessionUserId;
 
+var fromDate = null;
+var toDate = null;
 
 var graphBadgeData = function()
 {
@@ -56,7 +58,9 @@ var renderGraphAfterDataLoad = function()
         //figure out per date what the values are
         var now = new Date();
         var ago = new Date();
-        ago.setDate(now.getDate() - 70);
+        now.setTime(toDate);
+        ago.setTime(fromDate);
+        //ago.setDate(now.getDate() - 30);
         ago.setHours(0,0,0,0);
         var datadata = {};
         while(ago < now)
@@ -66,7 +70,7 @@ var renderGraphAfterDataLoad = function()
                 if(datadata[bkey] == null) datadata[bkey] = {};
                 datadata[bkey][ago]  = {};
                 datadata[bkey][ago].count = graphData[bkey].dateAndTotal[ago] == null ? 0 :  graphData[bkey].dateAndTotal[ago];
-                datadata[bkey][ago].date = ago;
+                datadata[bkey][ago].date = new Date(ago);
             }
             ago.setDate(ago.getDate() +1);
         }
@@ -81,6 +85,9 @@ exports.graph = function(_req, _res){
     req = _req;
     var accountType = accountTypes.getAccount(_req.query.account);
     sessionUserId = accountType + "_" + _req.query.user;
+
+    fromDate = req.query.fromDate;
+    toDate = req.query.toDate;
 
     badgeDataForGraph = badgeDataSystem.badgeData(eventEmitter, "badgeDataForGraphLoaded");
     //check if account types are filled in

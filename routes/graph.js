@@ -8,6 +8,7 @@ var stepupData = require('./stepupData.js');
 var accountTypes = require('./accountTypes.js');
 var badgeDataSystem = require('./badgeData.js');
 var GUID = require('./guid.js');
+var moment = require('moment');
 
 var badgeDataForGraph = null;
 var res, req;
@@ -75,7 +76,11 @@ var renderGraphAfterDataLoad = function()
             ago.setDate(ago.getDate() +1);
         }
 
-        res.render('graph.html', { graphData:datadata});
+        now.setTime(toDate);
+        ago.setTime(fromDate);
+        now.setHours(0,0,0,0);
+        ago.setHours(0,0,0,0);
+        res.render('graph.html', { user:req.query.user, account: req.query.account, graphData:datadata, fromDate: ago, toDate: now, moment: moment});
 
     //now i have to compare badges, show the correct badges. etc etc
 }

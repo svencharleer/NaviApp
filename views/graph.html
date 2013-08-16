@@ -6,6 +6,7 @@
 	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 	<script src="http://beta.openbadges.org/issuer.js"></script>
     <script type="text/javascript" src="../javascripts/d3.v3/d3.v3.js"></script>
+
 	<script type="text/javascript">
 		  var _gaq = _gaq || [];
 		  _gaq.push(['_setAccount', 'UA-38498955-1']);
@@ -270,6 +271,15 @@
 
         }
     </script>
+    <script type="text/javascript">
+        function submitDateRange(tmp)
+        {
+
+            var startDate = new Date($("#datePicker_start").val()).valueOf();
+            var endDate = new Date($("#datePicker_end").val()).valueOf();
+            window.location.href = "/navi/graph?user=<%= user %>&account=<%= account %>&fromDate=" + startDate + "&toDate=" + endDate;
+        }
+    </script>
 </head>
 <body>
 
@@ -277,22 +287,32 @@
 	<div id="globalheader">
 		<h2>Navi Badgeboard</h2>
 	</div>
-	<div id="filter">
-	</div>
-	<div id="badgedetail">Select a badge to view its details</div>
+    <div id="filter">
+         <a href="javascript:showHideLegend();" id="filterLink">Show Filter Options</a>
+    </div>
 </div>
 <!-- /header -->
 
-<div id="badgeoverview" >
-	
-	<div id="global" class="badgesection">	
-<h2>Global Badges</h2>
+<div id="badgegraph" >
+    <div id="options" style="display:none">
+        <div id="graphoptions">
+
+
+            <!-- DATE PICKERS -->
+
+            <label for="startdate">Between</label> <input type="date" name="startdate" id="datePicker_start" value="<%= moment(fromDate).format("YYYY-MM-DD")%>">
+            <label for="enddate">and</label> <input type="date" name="enddate" id="datePicker_end" value="<%=  moment(toDate).format("YYYY-MM-DD") %>"> <a href="javascript:submitDateRange();">Go</a> <br/>
+        </div>
+    </div>
+</div>
+
+
+
 
         <div id="graphs">
         </div>
 
 
-    </div>
 
 
 <script type="text/javascript">
